@@ -14,24 +14,14 @@ class TennisMatch
         $this->playerTwo = $playerTwo;
     }
 
-    public function pointToPlayerOne()
-    {
-        $this->playerOne->score();
-    }
-
-    public function pointToPlayerTwo()
-    {
-        $this->playerTwo->score();
-    }
-
     public function score()
     {
         if ($this->hasWinner()) {
-            return 'winner! ' . $this->leader();
+            return 'winner! ' . $this->leader()->name;
         }
 
         if ($this->hasAdvantage()) {
-            return 'advantage, ' . $this->leader();
+            return 'advantage, ' . $this->leader()->name;
         }
 
         if ($this->isDeuce()) {
@@ -47,25 +37,22 @@ class TennisMatch
 
     public function hasWinner()
     {
-        if ($this->playerOne->points > 3 && $this->playerOne->points >= $this->playerTwo->points + 2) {
-            return true;
+        // if ($this->playerOne->points < 4 || $this->playerTwo->points < 4) {
+        //     return false;
+        // }
+
+        if (max([$this->playerOne->points, $this->playerTwo->points]) < 4) {
+            return false;
         }
 
-        if ($this->playerTwo->points > 3 && $this->playerTwo->points >= $this->playerOne->points + 2) {
-            return true;
-        }
-
-        return false;
+        return abs($this->playerOne->points - $this->playerTwo->points) > 2;
     }
 
     public function leader()
     {
-        return $this->playerOne->points > $this->playerTwo->points ? $this->playerOne->name : $this->playerTwo->name;
-    }
-
-    public function hasEnoughtPoints()
-    {
-        return $this->playerOne->points >= 3 && $this->playerTwo->points >= 3 ? true : false;
+        return $this->playerOne->points > $this->playerTwo->points
+            ? $this->playerOne
+            : $this->playerTwo;
     }
 
     public function isDeuce()
@@ -75,11 +62,15 @@ class TennisMatch
 
     public function hasAdvantage()
     {
-        if($this->hasEnoughtPoints()) {
+        if ($this->hasEnoughtPoints()) {
             return !$this->isDeuce();
         }
-        
+
         return false;
     }
 
+    public function hasEnoughtPoints()
+    {
+        return $this->playerOne->points >= 3 && $this->playerTwo->points >= 3 ? true : false;
+    }
 }

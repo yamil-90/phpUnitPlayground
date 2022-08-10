@@ -21,11 +21,11 @@ class TennisMatchTest extends TestCase
         );
 
         for($i=0; $i < $playerOnePoints; $i++){
-            $match->pointToPlayerOne();
+            $john->score();
         }
 
         for($i=0; $i < $playerTwoPoints; $i++){
-            $match->pointToPlayerTwo();
+            $jane->score();
         }
 
         $this->assertEquals($score, $match->score());
