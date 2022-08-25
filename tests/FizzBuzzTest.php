@@ -1,14 +1,16 @@
 <?php
 
+namespace Tests;
+
 use App\FizzBuzz;
 use PHPUnit\Framework\TestCase;
 
 class FizzBuzzTest extends TestCase
 {
-    /** 
+    /**
      * @test
      * @dataProvider dataProvider
-     *  
+     *
      */
     public function ir_returns_the_correct_string($number, $expectedResult)
     {
@@ -24,5 +26,4 @@ class FizzBuzzTest extends TestCase
             [2, 2]
         ];
     }
-
 }
